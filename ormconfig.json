@@ -1,9 +1,10 @@
 {
   "type": "postgres",
-  "name": "default",
-  "url": "postgres://qnlmlobv:JDM9DvtdhbiJIQNa9rsS0l0LRbWbYXtT@tuffi.db.elephantsql.com:5432/qnlmlobv",
-  "synchronize": true,
-  "logging": true,
+  "host": "localhost",
+  "port": 5432,
+  "username": "postgres",
+  "password": "docker",
+  "database": "gostack_desafio06",
   "entities": ["./src/models/*.ts"],
   "migrations": ["./src/database/migrations/*.ts"],
   "cli": {
