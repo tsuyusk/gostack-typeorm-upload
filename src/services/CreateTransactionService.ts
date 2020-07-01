@@ -24,15 +24,15 @@ class CreateTransactionService {
 
     const { total } = await transactionRepository.getBalance();
 
-    if (type === 'outcome' && total <= 0) {
+    if (type === 'outcome' && value > total) {
       throw new AppError('You cannot make an outcome without money!');
     }
 
-    const searchedCategory = await categoryRepository.findOne({
+    const hasCategory = await categoryRepository.findOne({
       where: { title: category },
     });
 
-    if (!searchedCategory) {
+    if (!hasCategory) {
       const newCategory = await categoryRepository.create({
         title: category,
       });
@@ -40,10 +40,15 @@ class CreateTransactionService {
       await categoryRepository.save(newCategory);
     }
 
+    const searchedCategory = await categoryRepository.findOne({
+      where: { title: category },
+    });
+
     const transaction = await transactionRepository.create({
       title,
       type,
       value,
+      category_id: searchedCategory?.id,
       category: searchedCategory,
     });
 
